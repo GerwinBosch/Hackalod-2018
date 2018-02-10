@@ -182,7 +182,7 @@ class App extends Component {
             paddingLeft: '10px',
           }}>
 
-            <h1>Brouwerij Tijdreis</h1>
+            <h1>🍺 Brouwerij Tijdreis 🍺</h1>
             <IconButton
                 iconClassName="muidocs-icon-custom-github"
                 href="https://github.com/GerwinBosch/hackalod-2018"

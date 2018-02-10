@@ -1,4 +1,4 @@
-# Brouwerij Tijdreis - *Brewery timeline*
+# 🍺 Brouwerij Tijdreis - *Brewery timeline*
 
 Brouwerij Tijdreis is een van de producten die gemaakt is tijdens [Hackalod-2018](http://hackalod.com/)
 

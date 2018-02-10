@@ -35,18 +35,21 @@ const query = 'PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n' +
     '  ?address <http://schema.org/latitude> ?latitude.\n' +
     '  ?address <http://schema.org/longitude> ?longitude.\n' +
     '} Order by ?jaar'
+
+const steps = [100,100,100,75,75,50,50,25,25]
 class App extends Component {
   constructor(){
     super();
     this.state = {
       lat: 51.505,
       lng: 4.2,
-      zoom: 13,
+      zoom: 8,
       playing:false,
       min:0,
       max:100,
       current:0,
       data:[],
+      start:1400
     }
     const client = new SparqlClient('https://api.dev.triply.cc/datasets/GerwinBosch/hackalod-beer/services/hackalod-beer/sparql');
     client.query(query).execute((err, results) => {
@@ -54,8 +57,33 @@ class App extends Component {
         console.error('oops',err)
         }
         console.info('results', results);
+      let max = 0;
+      let fYear = results.results.bindings[0].jaar.value
+      let lYear = results.results.bindings[results.results.bindings.length-1].jaar.value;
+      console.log(lYear)
+      console.log(fYear)
+      let diff = lYear - this.state.start;
+      console.log(diff)
+      let current = 0
+      console.log(current)
+      console.log(diff > current)
+      while (diff > current){
+        console.log('diff',diff)
+        console.log('current',current)
+        console.log('year',this.state.start )
+        if(current > 5000){
+          throw new Error('FUCK')
+        }
+        if(max >= steps.length){
+            current = current + 1;
+          } else {
+            current = current + steps[max]
+          }
+          max+=1;
+      }
+      console.log('max',max)
       this.setState({
-        max: results.results.bindings.length -1 ,
+        max: max,
         data: results.results.bindings,
       })
     });
@@ -95,21 +123,28 @@ class App extends Component {
 
   render() {
     const position = [this.state.lat, this.state.lng]
-    const markers = [];
-    let year = "0000";
-    if(this.state.data.length > 0){
-      year = this.state.data[this.state.current].jaar.value;
-      for(let index = 0; index < this.state.current; index+=1 ){
-        const datapoint = this.state.data[index]
-        markers.push((
-            <Marker position={[datapoint.latitude.value, datapoint.longitude.value]} key={datapoint.name.value}>
-              <Popup>
-                <span>{datapoint.name.value}</span>
-              </Popup>
-            </Marker>
-        ))
+    let year = this.state.start;
+    for(let i = 0; i < this.state.current; i = i +1){
+      if(i >= steps.length){
+        year = year + 1;
+      } else {
+        year = year + steps[i]
       }
     }
+    let markers = [];
+    if(this.state.data){
+       markers = this.state.data.filter(value =>{
+         console.log(value)
+         return value.jaar.value <= year}).map(datapoint => {
+
+      return (
+          <Marker position={[datapoint.latitude.value, datapoint.longitude.value]} key={datapoint.name.value}>
+            <Popup>
+              <span>{datapoint.name.value} {datapoint.jaar.value}</span>
+            </Popup>
+          </Marker>
+      )
+    })}
     console.log(markers)
     return (
         <MuiThemeProvider>

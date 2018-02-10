@@ -99,7 +99,7 @@ class App extends Component {
   };
   startStop = () => {
     if (!this.playing) {
-      setTimeout(this.stepper, 1000);
+      setTimeout(this.stepper, 750);
     }
     this.setState({playing: !this.state.playing});
   };
@@ -111,7 +111,7 @@ class App extends Component {
       });
     } else if (this.state.playing) {
       this.setState({current: this.state.current + 1});
-      setTimeout(this.stepper, 1000);
+      setTimeout(this.stepper, 750);
     }
 
   };

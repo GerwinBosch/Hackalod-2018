@@ -126,7 +126,7 @@ class App extends Component {
               {markers}
             </Map>
           </div>
-          <div id="YearInfo" style={{zIndex:10000,position:'absolute', top: '10px', right: '10px'}}>
+          <div className="YearInfo" style={{zIndex:10000,position:'absolute', top: '16px', right: '16px'}}>
             {year}
           </div>
           <div id="MapControls" style={{zIndex:10000,position:'absolute',width: '80vw', bottom:'20px', left:'10vw'}}>

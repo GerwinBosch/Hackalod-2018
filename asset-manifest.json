@@ -1,10 +1,10 @@
 {
   "main.css": "static/css/main.28c6e69d.css",
   "main.css.map": "static/css/main.28c6e69d.css.map",
-  "main.js": "static/js/main.08292f03.js",
-  "main.js.map": "static/js/main.08292f03.js.map",
-  "static\\media\\blackBeer.svg": "static/media/blackBeer.0731a145.svg",
-  "static\\media\\goldBeer.svg": "static/media/goldBeer.8a95c0f1.svg",
-  "static\\media\\greenBeer.svg": "static/media/greenBeer.21a963b5.svg",
-  "static\\media\\material-ui-icons.eot": "static/media/material-ui-icons.039d6e51.eot"
+  "main.js": "static/js/main.92fb6623.js",
+  "main.js.map": "static/js/main.92fb6623.js.map",
+  "static/media/blackBeer.svg": "static/media/blackBeer.0731a145.svg",
+  "static/media/goldBeer.svg": "static/media/goldBeer.8a95c0f1.svg",
+  "static/media/greenBeer.svg": "static/media/greenBeer.21a963b5.svg",
+  "static/media/material-ui-icons.eot": "static/media/material-ui-icons.039d6e51.eot"
 }

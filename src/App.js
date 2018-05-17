@@ -55,7 +55,7 @@ class App extends Component {
       start: 1400,
     };
     const client = new SparqlClient(
-        'https://api.krr.triply.cc/datasets/GerwinBosch/BeerTimeline/services/BeerTimeline/sparql');
+        'https://data.labs.pdok.nl/sparql');
     client.query(query).execute((err, results) => {
       if (err) {
         console.error('oops', err);

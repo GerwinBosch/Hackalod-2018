@@ -85,7 +85,6 @@ class App extends Component {
   }
 
   toFirst = () => {
-    console.log('first')
     this.setState({
       playing: false,
       current: 0,

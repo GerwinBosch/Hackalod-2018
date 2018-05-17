@@ -9,7 +9,6 @@ import FastForward from 'material-ui/svg-icons/av/fast-forward';
 import FastBackward from 'material-ui/svg-icons/av/fast-rewind';
 import {SparqlClient} from 'sparql-client-2';
 import L from 'leaflet';
-import Bar from 'material-ui/svg-icons/maps/local-bar';
 
 // BUG https://github.com/Leaflet/Leaflet/issues/4968
 import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
@@ -56,7 +55,7 @@ class App extends Component {
       start: 1400,
     };
     const client = new SparqlClient(
-        'https://api.dev.triply.cc/datasets/GerwinBosch/hackalod-beer/services/hackalod-beer/sparql');
+        'https://api.krr.triply.cc/datasets/GerwinBosch/BeerTimeline/services/BeerTimeline/sparql');
     client.query(query).execute((err, results) => {
       if (err) {
         console.error('oops', err);
@@ -129,13 +128,11 @@ class App extends Component {
     let markers = [];
     if (this.state.data) {
       markers = this.state.data.filter(value => {
-        console.log(value);
-
         return value.jaar.value <= year;
       }).map(datapoint => {
         let icon = blackBar;
-        datapoint.jaar.value == year ? icon = greenBar : null;
-        year - datapoint.jaar.value > 100 ? icon = goldBar : null;
+        if (datapoint.jaar.value == year)icon = greenBar;
+        if (year - datapoint.jaar.value > 100) icon = goldBar;
         const iconPerson = new L.Icon({
           iconUrl: icon,
           iconSize: [25, 41],
@@ -155,7 +152,6 @@ class App extends Component {
         );
       });
     }
-    console.log(Bar);
     return (
         <MuiThemeProvider>
           <div className="App">
@@ -182,7 +178,7 @@ class App extends Component {
             paddingLeft: '10px',
           }}>
 
-            <h1>🍺 Brouwerij Tijdreis 🍺</h1>
+            <h1><span role="img" aria-label="beer">🍺</span> Brouwerij Tijdreis <span role="img" aria-label="beer">🍺</span></h1>
             <IconButton
                 iconClassName="muidocs-icon-custom-github"
                 href="https://github.com/GerwinBosch/hackalod-2018"

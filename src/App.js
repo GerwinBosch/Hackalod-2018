@@ -85,6 +85,7 @@ class App extends Component {
   }
 
   toFirst = () => {
+    console.log('first')
     this.setState({
       playing: false,
       current: 0,
@@ -216,16 +217,16 @@ class App extends Component {
             />
             <div id="playButtons" style={{display: 'flex'}}>
               <div style={{flexGrow: 1}}/>
-              <IconButton>
-                <FastBackward onClick={this.toFirst}/>
+              <IconButton onClick={this.toFirst}>
+                <FastBackward />
               </IconButton>
               <IconButton
                   onClick={this.startStop}
               >
                 {this.state.playing ? <Pause/> : <PlayArrow/>}
               </IconButton>
-              <IconButton>
-                <FastForward onClick={this.toLast}/>
+              <IconButton onClick={this.toLast}>
+                <FastForward />
               </IconButton>
               <div style={{flexGrow: 1}}/>
             </div>

@@ -15,7 +15,7 @@ Brouwerij Tijdreis is een React app die met behulp van een SPARQL-query alle bro
 
 ## The team
    - [Erwin Folmer](https://www.linkedin.com/in/erwinfolmer/)
-   - [Gerwin Bosch](www.linkedin.com/in/gerwinbosch)
+   - [Gerwin Bosch](https://www.linkedin.com/in/gerwinbosch)
    - [Pano Maria](https://www.linkedin.com/in/panomaria/)
    - [Wouter Beek](https://www.linkedin.com/in/wouterbeek/)
    

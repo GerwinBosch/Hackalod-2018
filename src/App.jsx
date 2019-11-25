@@ -61,7 +61,7 @@ class App extends Component {
       start: 1400
     };
     const client = new SparqlClient(
-      "https://api.kadaster.triply.cc/datasets/dbeerpedia/dbeerpedia/services/dbeerpedia/sparql"
+      "https://api.labs.kadaster.nl/datasets/dbeerpedia/dbeerpedia/services/dbeerpedia/sparql"
     );
     client.query(query).execute((err, results) => {
       if (err) {
@@ -74,7 +74,7 @@ class App extends Component {
       let current = 0;
       while (diff > current) {
         if (current > 5000) {
-          throw new Error("FUCK");
+          throw new Error("Step difference too large");
         }
         if (max >= steps.length) {
           current = current + 1;
@@ -138,8 +138,10 @@ class App extends Component {
         })
         .map(datapoint => {
           let icon = blackBar;
-          if (datapoint.jaar.value === year) icon = greenBar;
+          console.log(datapoint.jaar.value, year, datapoint.jaar.value- year);
+          if (+datapoint.jaar.value === year) icon = greenBar;
           if (year - datapoint.jaar.value > 100) icon = goldBar;
+          console.log(icon)
           const iconPerson = new L.Icon({
             iconUrl: icon,
             iconSize: [25, 41],
@@ -169,7 +171,7 @@ class App extends Component {
                 '&copy; Kaartgegevens © Kadaster | <a href="http://www.verbeterdekaart.nl/" target="_blank">verbeter de kaart</a>'
               }
               url={
-                "https://geodata.nationaalgeoregister.nl/tiles/service/wmts/brtachtergrondkaart/EPSG:3857/{z}/{x}/{y}.png"
+                "https://geodata.nationaalgeoregister.nl/tiles/service/wmts?SERVICE=WMTS&VERSION=1.0.0&REQUEST=GetTile&LAYER=brtachtergrondkaart&STYLE=default&FORMAT=image/png&TILEMATRIXSET=EPSG:3857&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}"
               }
             />
             {markers}

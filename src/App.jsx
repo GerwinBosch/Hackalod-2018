@@ -31,18 +31,17 @@ L.Marker.prototype.options.icon = L.icon({
   shadowSize: [41, 41]
 });
 
-const query = `PREFIX schema: <http://schema.org/>
-PREFIX geo: <http://www.opengis.net/ont/geosparql#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-  PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-  PREFIX dbeerpedia: <https://data.labs.kadaster.nl/dbeerpedia/dbeerpedia/vocab/>
-  Select distinct ?name ?jaar ?wkt WHERE {
-  ?s rdfs:label ?name.
-  ?s dbeerpedia:opgericht ?jaar.
-  ?s schema:address|dbeerpedia:address ?address.
-  ?address geo:hasGeometry ?geometry .
-  ?geometry geo:asWKT ?wkt
-  } Order by ?jaar`;
+const query = `prefix geo: <http://www.opengis.net/ont/geosparql#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix sdo: <http://schema.org/>
+prefix vocab: <https://data.pldn.nl/pldn/beer/vocab/>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+select distinct ?name ?jaar ?shape {
+  [ sdo:address/geo:hasGeometry/geo:asWKT ?shape;
+    rdfs:label ?name;
+    vocab:opgericht ?jaar ].
+}
+order by ?jaar`;
 
 const steps = [100, 100, 100, 75, 75, 50, 50, 25, 5, 5, 5];
 
@@ -61,7 +60,7 @@ class App extends Component {
       start: 1400
     };
     const client = new SparqlClient(
-      "https://api.labs.kadaster.nl/datasets/dbeerpedia/dbeerpedia/services/dbeerpedia/sparql"
+      "https://api.data.pldn.nl/datasets/pldn/beer/services/sparql/sparql"
     );
     client.query(query).execute((err, results) => {
       if (err) {

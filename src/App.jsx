@@ -37,8 +37,8 @@ prefix sdo: <http://schema.org/>
 prefix vocab: <https://data.pldn.nl/pldn/beer/vocab/>
 prefix xsd: <http://www.w3.org/2001/XMLSchema#>
 select distinct ?name ?jaar ?shape {
-  [ sdo:address/geo:hasGeometry/geo:asWKT ?shape;
-    rdfs:label ?name;
+  [ rdfs:label ?name;
+    vocab:address/geo:hasGeometry/geo:asWKT ?shape;
     vocab:opgericht ?jaar ].
 }
 order by ?jaar`;
@@ -137,10 +137,8 @@ class App extends Component {
         })
         .map(datapoint => {
           let icon = blackBar;
-          console.log(datapoint.jaar.value, year, datapoint.jaar.value- year);
           if (+datapoint.jaar.value === year) icon = greenBar;
           if (year - datapoint.jaar.value > 100) icon = goldBar;
-          console.log(icon)
           const iconPerson = new L.Icon({
             iconUrl: icon,
             iconSize: [25, 41],
@@ -149,7 +147,7 @@ class App extends Component {
             tooltipAnchor: [16, -28],
             shadowSize: [41, 41]
           });
-          const wkt = wellknown(datapoint.wkt.value);
+          const wkt = wellknown(datapoint.shape.value);
           return (
             <Marker position={[wkt.coordinates[1], wkt.coordinates[0]]} key={datapoint.name.value} icon={iconPerson}>
               <Popup>

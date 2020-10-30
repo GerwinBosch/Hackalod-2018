@@ -33,12 +33,10 @@ L.Marker.prototype.options.icon = L.icon({
 
 const query = `prefix geo: <http://www.opengis.net/ont/geosparql#>
 prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-prefix sdo: <http://schema.org/>
-prefix vocab: <https://data.pldn.nl/pldn/beer/vocab/>
-prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix vocab: <https://data.pldn.nl/pldn/bier/vocab/>
 select distinct ?name ?jaar ?shape {
   [ rdfs:label ?name;
-    vocab:address/geo:hasGeometry/geo:asWKT ?shape;
+    vocab:adres/geo:hasGeometry/geo:asWKT ?shape;
     vocab:opgericht ?jaar ].
 }
 order by ?jaar`;
@@ -60,7 +58,7 @@ class App extends Component {
       start: 1400
     };
     const client = new SparqlClient(
-      "https://api.data.pldn.nl/datasets/pldn/beer/services/sparql/sparql"
+      "https://api.data.pldn.nl/datasets/pldn/bier/services/sparql/sparql"
     );
     client.query(query).execute((err, results) => {
       if (err) {

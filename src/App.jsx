@@ -31,17 +31,18 @@ L.Marker.prototype.options.icon = L.icon({
   shadowSize: [41, 41]
 });
 
-const query = `prefix geo: <http://www.opengis.net/ont/geosparql#>
-prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-prefix vocab: <https://data.pldn.nl/pldn/bier/vocab/>
-select distinct ?name ?jaar ?shape {
-  [ rdfs:label ?name;
-    vocab:adres/geo:hasGeometry/geo:asWKT ?shape;
-    vocab:opgericht ?jaar ].
+const query = `prefix bif: <http://www.openlinksw.com/schemas/bif#>
+prefix bgt: <https://bgt.basisregistraties.overheid.nl/bgt/def/>
+prefix geo: <http://www.opengis.net/ont/geosparql#>
+select distinct ("flitspaal" as ?name) (year(?begin) as ?jaar) ?shape {
+  [ bgt:geometrie ?rd;
+    bgt:plusType bgt:Flitser;
+    bgt:objectBegintijd ?begin ].
+  bind(bif:ST_Transform(?rd, 4326) as ?shape)
 }
-order by ?jaar`;
+order by ?year`;
 
-const steps = [100, 100, 100, 75, 75, 50, 50, 25, 5, 5, 5];
+const steps = [1, 1, 1, 1];
 
 class App extends Component {
   constructor() {
@@ -55,10 +56,10 @@ class App extends Component {
       max: 100,
       current: 0,
       data: [],
-      start: 1400
+      start: 2004
     };
     const client = new SparqlClient(
-      "https://api.data.pldn.nl/datasets/pldn/bier/services/sparql/sparql"
+      "https://api.labs.kadaster.nl/datasets/kadaster/bgt/services/bgt/sparql"
     );
     client.query(query).execute((err, results) => {
       if (err) {
@@ -66,7 +67,7 @@ class App extends Component {
       }
       console.info("results", results);
       let max = 0;
-      let lYear = results.results.bindings[results.results.bindings.length - 1].jaar.value;
+      let lYear = 2020;
       let diff = lYear - this.state.start;
       let current = 0;
       while (diff > current) {
@@ -101,7 +102,7 @@ class App extends Component {
   };
   startStop = () => {
     if (!this.playing) {
-      setTimeout(this.stepper, 750);
+      setTimeout(this.stepper, 2000);
     }
     this.setState({ playing: !this.state.playing });
   };
@@ -113,7 +114,7 @@ class App extends Component {
       });
     } else if (this.state.playing) {
       this.setState({ current: this.state.current + 1 });
-      setTimeout(this.stepper, 750);
+      setTimeout(this.stepper, 2000);
     }
   };
 
@@ -187,11 +188,11 @@ class App extends Component {
         >
           <h1>
             <span role="img" aria-label="beer">
-              🍺
+              👮
             </span>{" "}
-            Brouwerij Tijdreis{" "}
+            Flitser Tijdreis{" "}
             <span role="img" aria-label="beer">
-              🍺
+              
             </span>
           </h1>
           <IconButton iconClassName="muidocs-icon-custom-github" href="https://github.com/GerwinBosch/hackalod-2018" />

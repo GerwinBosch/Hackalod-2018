@@ -11,7 +11,7 @@
     "react-dom": "^16.3.3",
     "react-leaflet": "^1.9.1",
     "react-leaflet-div-icon": "^1.1.0",
-    "react-scripts": "^1.1.4",
+    "react-scripts": "^5.0.1",
     "sparql-client-2": "^0.6.2",
     "sparqljs": "^2.0.3",
     "wellknown": "^0.5.0",
